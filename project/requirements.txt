@@ -1,0 +1,6 @@
+celery
+Django
+flower
+pytest
+pytest-django
+redis
