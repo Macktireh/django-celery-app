@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+from celery.schedules import crontab
+
+import orders.tasks  # noqa: F401
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -136,6 +140,24 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_BEAT_SCHEDULE = {
+    "sample_task_1": {
+        "task": "orders.tasks.sample_task_1",
+        "schedule": crontab(minute="*/1"),
+    },
+    "sample_task_2": {
+        "task": "orders.tasks.sample_task_2",
+        "schedule": crontab(minute="*/1"),
+    },
+    "sample_task_3": {
+        "task": "orders.tasks.sample_task_3",
+        "schedule": crontab(minute="*/1"),
+    },
+    # "send_email_report": {
+    #     "task": "core.tasks.send_email_report",
+    #     "schedule": crontab(hour="*/1"),
+    # },
+}
 
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
