@@ -31,8 +31,8 @@ services:
       # - web
       - redis
     restart: always
-    deploy:
-      replicas: 3
+    # deploy:
+    #   replicas: 3
   
   celery-beat:
     build: ./project
@@ -45,6 +45,7 @@ services:
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
     depends_on:
       - redis
+    restart: always
 
   dashboard:
     build: ./project
